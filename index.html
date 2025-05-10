@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3 Anos de Namoro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Contêiner para as flores caindo -->
+  <div id="flores-container"></div>
+
+  <!-- Conteúdo Inicial -->
+  <div id="conteudo">
+    <h1>❤️ 3 Anos de Namoro ❤️</h1>
+    <h3>Aceita viver para sempre comigo?</h3>
+    <button id="btn-sim">SIM!!</button>
+    <button id="btn-nao" onmouseover="desviar(event)">Não.</button>
+  </div>
+
+  <!-- Álbum de Fotos (inicialmente escondido e com opacidade 0 para transição) -->
+  <div id="album" class="hidden">
+    <h2>Momentos Especiais 💖</h2>
+    <div id="fotos-container">
+      <!-- Fotos empilhadas que poderão ser arrastadas -->
+        <img class="foto" src="foto1.jpg" alt="Foto 1">
+        <img class="foto" src="foto2.jpg" alt="Foto 2">
+        <img class="foto" src="foto3.jpg" alt="Foto 3">
+        <img class="foto" src="foto4.jpg" alt="Foto 4">
+        <img class="foto" src="foto5.jpg" alt="Foto 5">
+        <img class="foto" src="foto6.jpg" alt="Foto 6">
+        <img class="foto" src="foto7.jpg" alt="Foto 7">
+        <img class="foto" src="foto8.jpg" alt="Foto 8">
+        <img class="foto" src="foto9.jpg" alt="Foto 9">
+      <!-- Adicione mais fotos conforme necessário -->
+    </div>
+  </div>
+
+  <!-- Elemento de Áudio para a música de fundo -->
+  <!-- Substitua "sua-musica.mp3" pelo caminho do seu arquivo MP3 -->
+  <audio id="bg-music" src="sua-musica.mp3" loop></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>

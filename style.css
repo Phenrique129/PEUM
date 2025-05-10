@@ -1,0 +1,98 @@
+/* Classe para esconder elementos */
+.hidden {
+  display: none;
+}
+
+/* Estilo do body e textos (mesma cor de fundo da tela principal) */
+body {
+  background-color: #f0f8ff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 50px;
+  overflow: hidden;
+  position: relative;
+}
+
+#conteudo {
+  position: relative;
+  z-index: 1;
+}
+
+h1 {
+  color: #ff69b4;
+  font-size: 3em;
+}
+
+h3 {
+  color: #4682b4;
+  font-size: 2em;
+}
+
+/* Estilização dos botões */
+button {
+  background-color: #ff1143;
+  color: white;
+  border: none;
+  padding: 15px 32px;
+  font-size: 16px;
+  margin: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #ff6cb2;
+}
+
+/* Estilo para o álbum com a mesma cor de fundo da tela principal */
+#album {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f0f8ff;  /* Igual ao fundo da tela principal */
+  color: #333;               /* Texto em cor escura para contraste */
+  text-align: center;
+  padding-top: 50px;
+  opacity: 0;               /* Começa invisível para a transição */
+  transition: opacity 2s;   /* Transição lenta para opacidade */
+}
+
+/* Contêiner para as fotos */
+#fotos-container {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+}
+
+/* Estilo para as fotos empilhadas (centralizadas e arrastáveis) */
+.foto {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px; /* Ajuste conforme necessário */
+  border-radius: 10px;
+  cursor: grab;
+  user-select: none;
+}
+ 
+@media (max-width: 600px) {
+  body {
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 2em;
+  }
+  
+  h3 {
+    font-size: 1.5em;
+  }
+  
+  .foto {
+    width: 50%; 
+  }
+}
