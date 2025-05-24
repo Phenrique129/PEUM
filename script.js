@@ -1,17 +1,11 @@
-/* =======================================================
-   FUNÇÃO: Cria flores caindo
-   =======================================================
-   Mantém o efeito de flores, este código continua idêntico.
-*/
 function createFlower() {
   const flower = document.createElement("img");
-  flower.src = "flores.gif"; 
+  flower.src = "flores.gif";
   flower.classList.add("flor");
   flower.style.left = Math.random() * window.innerWidth + "px";
   flower.style.width = "90px";
-  flower.style.height = "auto";
   flower.style.position = "absolute";
-  flower.style.top = "-50px"; 
+  flower.style.top = "-50px";
 
   document.body.appendChild(flower);
 
@@ -20,7 +14,6 @@ function createFlower() {
   function fall() {
     let topPos = parseFloat(flower.style.top);
     flower.style.top = topPos + speed + "px";
-
     if (topPos < window.innerHeight) {
       requestAnimationFrame(fall);
     } else {
@@ -30,36 +23,22 @@ function createFlower() {
   fall();
 }
 
-/* Inicia as flores caindo a cada 400ms */
 let flowerInterval = setInterval(createFlower, 400);
 
-/* =======================================================
-   FUNÇÃO: Faz o botão "Não" fugir do cursor
-   ======================================================= */
 function desviar(event) {
   var button = event.target;
-  var taskbarHeight = 40; // Altura aproximada da barra de tarefas
-  var maxX = window.innerWidth - button.offsetWidth - 10; 
-  var maxY = window.innerHeight - button.offsetHeight - taskbarHeight - 10; 
-
-  var x = Math.max(10, Math.random() * maxX); 
-  var y = Math.max(10, Math.random() * maxY); 
-
+  var maxX = window.innerWidth - button.offsetWidth - 10;
+  var maxY = window.innerHeight - button.offsetHeight - 50;
+  var x = Math.max(10, Math.random() * maxX);
+  var y = Math.max(10, Math.random() * maxY);
   button.style.position = "absolute";
   button.style.left = `${x}px`;
   button.style.top = `${y}px`;
 }
 
-/* =======================================================
-   FUNÇÃO: Torna um elemento arrastável (drag-and-drop)
-   ======================================================= */
 function makeDraggable(el) {
   let offsetX = 0, offsetY = 0, initialX, initialY;
-
-  // Eventos de mouse
   el.addEventListener('mousedown', dragMouseDown);
-
-  // Eventos de toque
   el.addEventListener('touchstart', dragTouchStart, { passive: false });
 
   function dragMouseDown(e) {
@@ -81,15 +60,14 @@ function makeDraggable(el) {
     el.style.top = (el.offsetTop + offsetY) + "px";
   }
 
-  function closeDragElement(e) {
+  function closeDragElement() {
     document.removeEventListener('mousemove', elementDrag);
     document.removeEventListener('mouseup', closeDragElement);
   }
 
-  // Funções para modos de toque
   function dragTouchStart(e) {
     e.preventDefault();
-    if (e.touches.length === 1) { // Garante que estamos lidando com um toque único
+    if (e.touches.length === 1) {
       initialX = e.touches[0].clientX;
       initialY = e.touches[0].clientY;
       document.addEventListener('touchmove', elementTouchDrag, { passive: false });
@@ -110,65 +88,107 @@ function makeDraggable(el) {
     }
   }
 
-  function closeTouchDrag(e) {
+  function closeTouchDrag() {
     document.removeEventListener('touchmove', elementTouchDrag);
     document.removeEventListener('touchend', closeTouchDrag);
   }
 }
 
-
-/* =======================================================
-   FUNÇÃO: Reproduz a música de fundo (MP3) com fade-in gradual
-   ======================================================= */
 function playBgMusic() {
   const audio = document.getElementById("bg-music");
-  audio.volume = 0; // Começa com volume 0
-  audio.play().catch(err => {
-    console.error("Erro ao reproduzir música:", err);
-  });
-
-  // Aumenta gradualmente o volume até 1
+  audio.volume = 0;
+  audio.play().catch(err => console.error("Erro ao reproduzir música:", err));
   let vol = 0;
   let fadeInterval = setInterval(() => {
-    vol += 0.05; // Incrementa o volume - ajuste conforme necessário
+    vol += 0.05;
     if (vol >= 1) {
       vol = 1;
       clearInterval(fadeInterval);
     }
     audio.volume = vol;
-  }, 200); // Intervalo em milissegundos para atualizar o volume
+  }, 200);
 }
 
-/* =======================================================
-   EVENTO: Ao clicar em "SIM"
-     - Esconde o conteúdo inicial
-     - Exibe o álbum de fotos com transição lenta
-     - Para as flores caindo
-     - Inicia a reprodução da música de fundo (MP3) com fade-in
-     - Torna as fotos arrastáveis
-   ======================================================= */
-document.getElementById("btn-sim").addEventListener("click", function() {
-  // Esconde o conteúdo inicial
+document.getElementById("btn-sim").addEventListener("click", function () {
   document.getElementById("conteudo").style.display = "none";
-  
-  // Para as flores caindo
   clearInterval(flowerInterval);
-  
-  // Exibe o álbum com transição: removemos 'hidden'
   const album = document.getElementById("album");
   album.classList.remove("hidden");
-  
-  // Força o layout para que a transição de opacity seja aplicada
-  setTimeout(() => {
-    album.style.opacity = 1;
-  }, 10);
-  
-  // Inicia a reprodução da música de fundo (MP3) com fade-in
+  setTimeout(() => album.style.opacity = 1, 10);
   playBgMusic();
-  
-  // Torna cada foto arrastável
+
   const photos = document.querySelectorAll(".foto");
-  photos.forEach(function(photo) {
-    makeDraggable(photo);
-  });
+  photos.forEach(makeDraggable);
 });
+
+// ========== Quiz Simples via alert/prompt ==========
+function iniciarQuiz() {
+  const perguntas = [
+    {
+      pergunta: "1. Como eu te chamo carinhosamente?",
+      alternativas: ["1) Mozão", "2) Bê", "3) Vd", "4) Gatinha"],
+      correta: "4"
+    },
+    {
+      pergunta: "2. Qual foi o nosso primeiro filme juntos no cinema?",
+      alternativas: ["1) Titanic", "2) Vingadores", "3) Thor", "4) A Barraca do Beijo"],
+      correta: "3"
+    },
+    {
+      pergunta: "3. Qual o sabor do meu sorvete favorito?",
+      alternativas: ["1) Morango", "2) Baunilha", "3) Menta", "4) Ovomaltine"],
+      correta: "3"
+    },
+    {
+      pergunta: "4. Onde foi nosso primeiro beijo?",
+      alternativas: ["1) Cinema", "2) Praça", "3) Carro", "4) Ponto de onibus"],
+      correta: "4"
+    },
+    {
+      pergunta: "5. Qual a minha cor favorita?",
+      alternativas: ["1) Verde", "2) Azul", "3) Roxo", "4) Preto"],
+      correta: "2"
+    },
+    {
+      pergunta: "6. Qual é o nome do nosso primeiro filho?",
+      alternativas: ["1) Minion Bob", "2) Sapo bob", "3) Bela de Neve", "4) Fofucho"],
+      correta: "1"
+    },
+    {
+      pergunta: "7 .Qual é o nome do nosso ultimo filho?",
+      alternativas: ["1) Minion Bob", "2) Sapo bob", "3) Bela de Neve", "4) Fofucho"],
+      correta: "3"
+    },
+    {
+      pergunta: "8. Quem disse 'eu te amo' primeiro?",
+      alternativas: ["1) Pedro", "2) Ana", "3) Nós dois", "4) Indiferente"],
+      correta: "1"
+    },
+    {
+      pergunta: "9. Qual é a nossa música?",
+      alternativas: ["1) Perfect", "2) Dandelions", "3) Shallow", "4) Thinking Out Loud"],
+      correta: "2"
+    },
+    {
+      pergunta: "10. Qual meu passatempo favorito?",
+      alternativas: ["1) Estudar", "2) Dançar", "3) Sair", "4) Te ver"],
+      correta: "4"
+    }
+  ];
+
+  let acertos = 0;
+
+  for (let i = 0; i < perguntas.length; i++) {
+    const p = perguntas[i];
+    let resposta = prompt(`${p.pergunta}\n${p.alternativas.join("\n")}\n\nDigite a letra da alternativa:`);
+
+    if (resposta && resposta.toLowerCase() === p.correta) {
+      alert("✅ Acertou! 🥰");
+      acertos++;
+    } else {
+      alert(`❌ Ops! A resposta correta era "${p.correta.toUpperCase()}".`);
+    }
+  }
+
+  alert(`🎉 Você acertou ${acertos} de ${perguntas.length} perguntas!\nTe amo muito 💖 Muito obrigado por todo esse tempo ao meu lado. 💖💖💖25/05/2022💖💖💖`);
+}
